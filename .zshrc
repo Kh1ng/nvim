@@ -115,6 +115,9 @@ source $ZSH/oh-my-zsh.sh
 # Path to bat config
 export BAT_CONFIG_PATH="~/.config/bat/config.conf"
 
+#python keyring
+export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+
 # Replace stuff with bat
 alias cat='bat '
 alias rg='batgrep '
@@ -246,4 +249,11 @@ alias ssn='sudo shutdown now'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+#zioxide
+eval "$(zoxide init zsh)"
+alias cd="z"
+
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
