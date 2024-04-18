@@ -90,13 +90,11 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-<<<<<<< HEAD
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
-=======
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
->>>>>>> f5c9fe8e15aafb6857706e3c05b5eee4ecb98a2b
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
