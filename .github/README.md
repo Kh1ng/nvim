@@ -1,1 +1,1 @@
-../../../dotfiles/.config/nvim/.github/README.md
+My nvim dotfiles
