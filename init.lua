@@ -90,8 +90,13 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+<<<<<<< HEAD
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
+=======
+-- Set to true if you have a Nerd Font installed and selected in the terminal
+vim.g.have_nerd_font = false
+>>>>>>> f5c9fe8e15aafb6857706e3c05b5eee4ecb98a2b
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -153,6 +158,9 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+--coltons stuff
+vim.opt.tabstop = 2
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -227,6 +235,9 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  'morhetz/gruvbox',
+  'windwp/nvim-autopairs',
+  'github/copilot.vim',
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -286,7 +297,13 @@ require('lazy').setup({
         ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+        ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
+        ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
       }
+      -- visual mode
+      require('which-key').register({
+        ['<leader>h'] = { 'Git [H]unk' },
+      }, { mode = 'v' })
     end,
   },
 
@@ -518,6 +535,16 @@ require('lazy').setup({
               callback = vim.lsp.buf.clear_references,
             })
           end
+
+          -- The following autocommand is used to enable inlay hints in your
+          -- code, if the language server you are using supports them
+          --
+          -- This may be unwanted, since they displace some of your code
+          if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+            map('<leader>th', function()
+              vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
+            end, '[T]oggle Inlay [H]ints')
+          end
         end,
       })
 
@@ -600,6 +627,17 @@ require('lazy').setup({
 
   { -- Autoformat
     'stevearc/conform.nvim',
+    lazy = false,
+    keys = {
+      {
+        '<leader>f',
+        function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
+    },
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
@@ -740,7 +778,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'gruvbox'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
@@ -806,6 +844,8 @@ require('lazy').setup({
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 
+      -- Prefer git instead of curl in order to improve connectivity in some environments
+      require('nvim-treesitter.install').prefer_git = true
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup(opts)
 
@@ -830,6 +870,9 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.autopairs',
+  -- require 'kickstart.plugins.neo-tree',
+  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
