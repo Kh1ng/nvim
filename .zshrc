@@ -88,8 +88,6 @@ plugins=(
   branch 
   github 
   zsh-autosuggestions 
-  zsh-syntax-highlighting 
-  zsh-completions 
   zsh-interactive-cd 
   zsh-navigation-tools
 )
@@ -265,6 +263,9 @@ alias ssn='sudo shutdown now'
 eval "$(zoxide init zsh)"
 alias cd="z"
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+#fzf
+eval "$(fzf --zsh)"
+
+source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
