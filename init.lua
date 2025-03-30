@@ -224,12 +224,13 @@ require('lazy').setup({
     'morhetz/gruvbox',
     priority = 1000,
     config = function()
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false },
-        },
-      }
-      vim.cmd.colorscheme 'gruvbox'
+--      require('tokyonight').setup {
+--        styles = {
+--          comments = { italic = false },
+--        },
+--      }
+
+vim.cmd.colorscheme 'gruvbox'
       vim.cmd.hi 'Comment gui=none'
     end,
   },
